@@ -1,5 +1,5 @@
 class DatedCommits:
-    def __init__(self, repo, date_range, commits):
+    def __init__(self, repo, day, commits):
         self.repo = repo
-        self.date_range = date_range
+        self.day = day
         self.commits = commits
