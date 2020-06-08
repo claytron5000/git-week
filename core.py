@@ -1,10 +1,8 @@
 from git import Repo
+import DatedCommits
 
 
-def findCommits(repoPath, start_date, end_date):
-
-    repo = Repo(repoPath) 
-    assert not repo.bare
+def findCommits(repo, date_range):
 
     config = repo.config_reader()
     your_email = config.get_value('user', 'email')
@@ -13,14 +11,14 @@ def findCommits(repoPath, start_date, end_date):
 
     your_commits_in_range = []
 
-    for x in heads:
-        date = x.commit.authored_date
-        author_email = x.commit.author.email
+    for head in heads:
+        date = head.commit.authored_date
+        author_email = head.commit.author.email
         
         if author_email != your_email:
             continue
-        if date > start_date and date < end_date:
-            your_commits_in_range.append(x)
-            # print(x.commit.authored_date)
-            # print(x.commit.summary)
+        if date > date_range.start and date < date_range.end:
+            your_commits_in_range.append(head)
+            # print(head.commit.authored_date)
+            # print(head.commit.summary)
     return your_commits_in_range
