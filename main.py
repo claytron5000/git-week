@@ -17,11 +17,11 @@ from DiffDisplay import DiffDisplay
 
 def loopThroughDates(*,projects_path, start_date, end_date):
     # repos = directories.getGitDirectories("../../Playground")
-    curr_day = getLastWeek()
-    last_sunday = curr_day + timedelta(weeks=1)
+    curr_day = start_date #getLastWeek()
+    # last_sunday = start_date #curr_day + timedelta(weeks=1)
     delta = timedelta(days=1)
 
-    while curr_day < last_sunday:
+    while curr_day <= end_date:
 
         # Print the Day header
         day_name = curr_day.strftime("%A")
@@ -34,7 +34,9 @@ def loopThroughDates(*,projects_path, start_date, end_date):
                 continue
             # if (repo.is_dir() and Path(repo+"/.git")):
             repo = Repo(repo_path)
+            print(repo)
             commits = core.findCommits(repo, curr_day)
+            # print(repo)
             if len(commits) > 0 : 
                 # todo use the datedcommits to do printing/ layout
                 print("\t", bold(repo.working_dir[repo.working_dir.rindex("/")+1:].capitalize()))
