@@ -1,9 +1,8 @@
 from git import Repo
 from datetime import timedelta, datetime
 
-
-
 class RepoFilter:
+
     def __init__(self, repo):
         self.repo = repo
         self.commits = {}
@@ -12,7 +11,6 @@ class RepoFilter:
     def getCommitsInDay(self, day):
         self.current_day = day
         for head in self.heads:
-            # fakey = {head: "value"}
             self.commits[head] = self.__gatherCommits(head)
     
     def __gatherCommits(self, head, count=2, commits=[]):
@@ -26,9 +24,7 @@ class RepoFilter:
         else:
             return commits
 
-
-repo = Repo("../dummy2")
-repofilter = RepoFilter(repo)
-today = datetime.now()
-repofilter.getCommitsInDay(today)
-print(repofilter.commits)
+    def print():
+        for head in commits:
+            print("head: ")
+            print(head)

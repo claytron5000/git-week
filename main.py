@@ -12,6 +12,7 @@ from DateRange import DateRange
 from DatedCommits import DatedCommits
 from dates import getLastWeek
 from DiffDisplay import DiffDisplay
+from RepoFilter import RepoFilter
 
 
 
@@ -34,20 +35,10 @@ def loopThroughDates(*,projects_path, start_date, end_date):
                 continue
             # if (repo.is_dir() and Path(repo+"/.git")):
             repo = Repo(repo_path)
-            print(repo)
-            commits = core.findCommits(repo, curr_day)
-            # print(repo)
-            if len(commits) > 0 : 
-                # todo use the datedcommits to do printing/ layout
-                print("\t", bold(repo.working_dir[repo.working_dir.rindex("/")+1:].capitalize()))
-                for head in commits:
-                    print("\t\t" + bold("- ") + head.commit.summary, "(" + datetime.fromtimestamp(head.commit.authored_date).time().strftime("%I:%M%p")+")")
-                    # print("\t\t", )
-                    if len(head.commit.parents) == 1:
-                        parent = head.commit.parents[0]
-                        diff_string = repo.git.diff(head.commit, parent, shortstat=True)
-                        diffDisplay = DiffDisplay(diff_string)
-                        diffDisplay.print()
+            repoFilter = RepoFilter(repo)
+            repoFilter.getCommitsInDay(curr_day)
+
+
                 
         curr_day += delta
 
